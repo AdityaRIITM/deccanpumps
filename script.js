@@ -151,17 +151,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const pumpTypeDescriptionElem = document.getElementById('pumpTypeDescription');
     const calculateBtn = document.getElementById('calculateBtn');
 
-    // Function to update pump type description
-    function updatePumpTypeDescription() {
-        const selectedType = pumpTypeSelect.value;
-        pumpTypeDescriptionElem.textContent = pumpTypeDescriptions[selectedType] || 'Select a pump type to see description.';
-    }
+    // // Function to update pump type description
+    // function updatePumpTypeDescription() {
+    //     const selectedType = pumpTypeSelect.value;
+    //     pumpTypeDescriptionElem.textContent = pumpTypeDescriptions[selectedType] || 'Select a pump type to see description.';
+    // }
 
     // Event listener for pump type selection change
-    pumpTypeSelect.addEventListener('change', updatePumpTypeDescription);
+    // pumpTypeSelect.addEventListener('change', updatePumpTypeDescription);
 
-    // Initial description display
-    updatePumpTypeDescription();
+    // // Initial description display
+    // updatePumpTypeDescription();
 
     // Event listener for the calculate button
     calculateBtn.addEventListener('click', () => {
