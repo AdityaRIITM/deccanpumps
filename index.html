@@ -1,82 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
     <title>Pump Efficiency Calculator</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" >
+  </head>
+  <body>
     <div class="container">
-        <h1>Pump Efficiency Calculator</h1>
+      <h1>Pump Efficiency Predictor</h1>
 
-        <div class="input-section">
-            <div class="form-group">
-                <label for="pumpFlowValue">Pump Flow Value</label>
-                <input type="number" id="pumpFlowValue" step="any" required>
-            </div>
+      <div id="errorModal" class="modal hidden">
+        <div class="modal-content">
+          <span id="closeModalBtn" class="close">&times;</span>
+          <p id="errorMessage">An error occurred</p>
+        </div>
+      </div>
+      <div class="input-section">
+        <div class="form-group">
+          <label for="pumpFlowValue">Pump Flow Value</label>
+          <input type="number" id="pumpFlowValue" step="any" required >
+        </div>
 
-            <div class="form-group">
-                <label>Select Unit for Flow</label>
-                <div class="radio-group">
-                    <input type="radio" id="unitM3s" name="flowUnit" value="1" checked>
-                    <label for="unitM3s">1: m³/s</label>
-                    
-                    <input type="radio" id="unitLpm" name="flowUnit" value="2">
-                    <label for="unitLpm">2: lpm</label>
-                    
-                    <input type="radio" id="unitLps" name="flowUnit" value="3">
-                    <label for="unitLps">3: lps</label>
-                    
-                    <input type="radio" id="unitUsgpm" name="flowUnit" value="4">
-                    <label for="unitUsgpm">4: Usgpm</label>
-                </div>
-            </div>
+        <div class="form-group">
+          <label>Select Unit for Flow</label>
+          <div class="radio-group">
+            <input
+              type="radio"
+              id="unitM3s"
+              name="flowUnit"
+              value="1"
+            >
+            <label for="unitM3s">1: m³/s</label>
 
-            <div class="form-group">
+            <input type="radio" id="unitLpm" name="flowUnit" value="2">
+            <label for="unitLpm">2: lpm</label>
+
+            <input type="radio" id="unitLps" name="flowUnit" value="3" >
+            <label for="unitLps">3: lps</label>
+
+            <input type="radio" id="unitUsgpm" name="flowUnit" value="4" >
+            <label for="unitUsgpm">4: Usgpm</label>
+          </div>
+        </div>
+
+        <!-- <div class="form-group">
                 <label for="specificSpeed">Specific Speed</label>
                 <input type="number" id="specificSpeed" step="any" required>
-            </div>
+            </div> -->
 
-            <div class="form-group">
-                <label for="pumpType">Pump Type</label>
-                <select id="pumpType">
-                    <option value="">--Select Pump Type--</option>
-                    <option value="A">Slurry Pump, end suction</option>
-                    <option value="B">Solid-handling, end suction</option>
-                    <option value="C">Submersible Sewage</option>
-                    <option value="F">ASME B73, API End Section-small</option>
-                    <option value="G">End Section Large</option>
-                    <option value="J">Double Section</option>
-                    <option value="V">Vertical Turbine, Mixed flow and propeller, single and multistage diffuser type</option>
-                </select>
-                <p id="pumpTypeDescription" class="description-text"></p>
-            </div>
-
-            <button id="calculateBtn">Calculate Efficiencies</button>
+        <div class="form-group">
+          <label for="head">Pressure Head</label>
+          <input type="number" id="head" step="any" required >
         </div>
 
-        <div class="output-section">
-            <h2>Calculation Results</h2>
-            <div class="result-group">
-                <label>Efficiency at Optimum:</label>
-                <span id="efficiencyOptimum" class="result-value">--</span>
-            </div>
-            <div class="result-group">
-                <label>Efficiency Correction:</label>
-                <span id="efficiencyCorrection" class="result-value">--</span>
-            </div>
-            <div class="result-group">
-                <label>Efficiency Deviation:</label>
-                <span id="efficiencyDeviation" class="result-value">--</span>
-            </div>
-            <div class="result-group final-result">
-                <label>Actual Efficiency:</label>
-                <span id="actualEfficiency" class="result-value">--</span>
-            </div>
+        <div class="form-group">
+          <label>Select Unit for Head</label>
+          <div class="radio-group">
+            <input
+              type="radio"
+              id="unitM"
+              name="headUnit"
+              value="1"
+            >
+            <label for="unitM">1: m</label>
+
+            <input type="radio" id="unitFeet" name="headUnit" value="2" >
+            <label for="unitFeet">2: feet</label>
+          </div>
         </div>
+
+        <div class="form-group">
+          <label for="rpm"> RPM </label>
+          <input type="number" id="rpm" step="any" required >
+        </div>
+
+        <div class="form-group">
+          <label for="pumpType">Pump Type</label>
+          <select id="pumpType">
+            <option value="">--Select Pump Type--</option>
+            <option value="A">Slurry Pump, end suction</option>
+            <option value="B">Solid-handling, end suction</option>
+            <option value="C">Submersible Sewage</option>
+            <option value="F">ASME B73, API End Section-small</option>
+            <option value="G">End Section Large</option>
+            <option value="J">Double Section</option>
+            <option value="V">
+              Vertical Turbine, Mixed flow and propeller, single and multistage
+              diffuser type
+            </option>
+          </select>
+          <p id="pumpTypeDescription" class="description-text"></p>
+        </div>
+
+        <button id="calculateBtn">Calculate Efficiencies</button>
+      </div>
+
+      <div class="output-section">
+        <h2>Calculation Results</h2>
+        <div class="result-group">
+          <label>Efficiency at Optimum:</label>
+          <span id="efficiencyOptimum" class="result-value">--</span>
+        </div>
+        <div class="result-group">
+          <label>Efficiency Correction:</label>
+          <span id="efficiencyCorrection" class="result-value">--</span>
+        </div>
+        <div class="result-group">
+          <label>Efficiency Deviation:</label>
+          <span id="efficiencyDeviation" class="result-value">--</span>
+        </div>
+        <div class="result-group final-result">
+          <label>Actual Efficiency:</label>
+          <span id="actualEfficiency" class="result-value">--</span>
+        </div>
+      </div>
     </div>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
